@@ -1,0 +1,5 @@
+I:\DotNetAndDocker\app\publier\DotNetAndDocker.exe
+I:\DotNetAndDocker\app\publier\DotNetAndDocker.dll
+I:\DotNetAndDocker\app\publier\DotNetAndDocker.deps.json
+I:\DotNetAndDocker\app\publier\DotNetAndDocker.runtimeconfig.json
+I:\DotNetAndDocker\app\publier\DotNetAndDocker.pdb

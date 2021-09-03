@@ -76,7 +76,7 @@ Cette commande permet de construire et exécuter l'application.
 
 Publie le binaire de l'application console dans le répertoire **publier**
 
-- Exécuter l'application 
+- Exécuter l'application
 
 > dotnet .\DotNetAndDocker.dll
 
