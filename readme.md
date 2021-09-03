@@ -1,6 +1,6 @@
 
 
-![OIP](pictures\oip.jpg)
+![OIP](pictures/oip.jpg)
 
 émonstration simplifiée de l'utilisation de **.NET 5** de la containeurisation avec **docker** (containers Windows et Linux) et d'intégration continue d'une application Console avec **Github Action**
 
@@ -38,7 +38,7 @@ Cette config ce base sur un os Windows Version **10.0.19041.1165**, vous pouvez 
 - Affichez les modèles disponibles : 
 >dotnet new --list
 
-![Modeles](pictures\Modeles.png)
+![Modeles](pictures/Modeles.png)
 
 - Créez l’application console :
 > dotnet new console -f net5.0 -o app -n NetCore.Docker
@@ -58,7 +58,7 @@ Console.Read();
 
 Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne sur les deux OS.
 
-![console](pictures\console.png)
+![console](pictures/console.png)
 
 
 ## Containeurisation d'une application console .NET 5
