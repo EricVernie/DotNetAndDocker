@@ -1,6 +1,5 @@
 
-
-![OIP](pictures/oip.jpg)
+![OIP](pictures/OIP.jpg)
 
 émonstration simplifiée de l'utilisation de **.NET 5** de la containeurisation avec **docker** (containers Windows et Linux) et d'intégration continue d'une application Console avec **Github Action**
 
@@ -58,7 +57,7 @@ Console.Read();
 
 Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne sur les deux OS.
 
-![console](pictures/console.png)
+![console](pictures/Console.png)
 
 
 ## Containeurisation d'une application console .NET 5
