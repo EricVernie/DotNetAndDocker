@@ -11,7 +11,7 @@ Si vous souhaitez tester le déploiement et l'intégration continue il vous faut
 
 # Préparation du poste de developpement (Windows 10)
 
-Cette config ce base sur un os Windows Version **10.0.19041.1165**, vous pouvez bien évidement utiliser d'autres OS.
+Cette config se base sur un os Windows Version **10.0.19041.1165**, vous pouvez bien évidement utiliser d'autres OS.
 
 1. Installez le sous système linux sur Windows (**WSL**). [Cliquez ici](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10) pour plus d'informations.
 
