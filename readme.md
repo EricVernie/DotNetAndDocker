@@ -108,7 +108,7 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 |--|--|--|--|--|
 |dotnetanddocker |  v1     |   71457a3d3799|   2 minutes ago|   186MB|
 
-- Exécuter l'application dans un container
+- Exécuter l'application dans un container Linux
 
 > Docker run --rm -it dotnetanddocker:v1
 
@@ -116,9 +116,15 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
 Comme vous le voyez ici l'application console tourne sur un container Docker Linux.
 
-- 
+- Création d'un container Windows
+- Basculer Docker Engine sur Container Windows
+![switch](./pictures/switch.png)
 
+- Exécuter l'application dans un container Windows
 
+> Docker run --rm -it dotnetanddocker:v1
+
+![ContainerWindows](./pictures/ContainerWindows.png)
 
 
 [Images officielles Docker pour .NET ](https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/net-core-net-framework-containers/official-net-docker-images)
