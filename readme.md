@@ -96,6 +96,8 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
     ENTRYPOINT [ "dotnet","DotNetAndDocker.dll" ]
 
+### Création d'un container Linux
+
 - Construire l'image Docker
 
 >docker build -t dotnetanddocker:v1 -f Dockerfile .
@@ -116,9 +118,18 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
 Comme vous le voyez ici l'application console tourne sur un container Docker Linux.
 
+
+
 - Création d'un container Windows
+
+
 - Basculer Docker Engine sur Container Windows
+
 ![switch](./pictures/switch.png)
+
+- Construire l'image Docker
+
+>docker build -t dotnetanddocker:v1 -f Dockerfile .
 
 - Exécuter l'application dans un container Windows
 
@@ -126,6 +137,19 @@ Comme vous le voyez ici l'application console tourne sur un container Docker Lin
 
 ![ContainerWindows](./pictures/ContainerWindows.png)
 
+### Se connecter à un container.
+
+- Lister les containers encours d'exécution
+
+>docker ps
+
+|CONTAINER ID|   IMAGE    | COMMAND  | CREATED |   STATUS |PORTS| NAMES|
+|--|--|--|--|--|--|--|
+|f7d60abdf162 |  dotnetanddocker:v1|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
+
+>docker exec --it f7d60abdf162 bash 
+
+>docker exec --it f7d60abdf162 cmd
 
 [Images officielles Docker pour .NET ](https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/net-core-net-framework-containers/official-net-docker-images)
 
