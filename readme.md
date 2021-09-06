@@ -116,9 +116,6 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
 ![RunContainer](./pictures/RunContainer.png)
 
-Comme vous le voyez ici l'application console tourne sur un container Docker Linux.
-
-
 
 ### Création d'un container Windows
 
@@ -147,11 +144,11 @@ Comme vous le voyez ici l'application console tourne sur un container Docker Lin
 |--|--|--|--|--|--|--|
 |f7d60abdf162 |  dotnetanddocker:v1|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
 
->docker exec -it f7d60abdf162 bash 
+>docker exec -it f7d60abdf162 bash (Linux)
 
 
 
->docker exec -it f7d60abdf162 cmd
+>docker exec -it f7d60abdf162 cmd (Windows)
 
 [Images officielles Docker pour .NET ](https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/net-core-net-framework-containers/official-net-docker-images)
 
