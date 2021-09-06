@@ -120,7 +120,7 @@ Comme vous le voyez ici l'application console tourne sur un container Docker Lin
 
 
 
-- Création d'un container Windows
+### Création d'un container Windows
 
 
 - Basculer Docker Engine sur Container Windows
@@ -147,9 +147,11 @@ Comme vous le voyez ici l'application console tourne sur un container Docker Lin
 |--|--|--|--|--|--|--|
 |f7d60abdf162 |  dotnetanddocker:v1|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
 
->docker exec --it f7d60abdf162 bash 
+>docker exec -it f7d60abdf162 bash 
 
->docker exec --it f7d60abdf162 cmd
+
+
+>docker exec -it f7d60abdf162 cmd
 
 [Images officielles Docker pour .NET ](https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/net-core-net-framework-containers/official-net-docker-images)
 
