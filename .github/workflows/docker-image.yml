@@ -1,11 +1,11 @@
 name: Docker Image CI
 
 on:
- # push:
- #   branches: [ main ]
+ push:
+    branches: [ main ]
   #pull_request:
    # branches: [ main ]
-  workflow_dispatch: 
+  #workflow_dispatch: 
 jobs:
 
   build:
@@ -19,8 +19,9 @@ jobs:
       with:
           dotnet-version: 5.0.x            
     - name: Publier le code source
-      run:  dotnet publish -c Release -o .\publier
+      #run:  dotnet publish -c Release -o .\publier
+      run: ls
     - name: Tester le code
       run:  echo "Il faudrait tester le code !!"
     - name: Construire image Docker
-      run: docker build . --file Dockerfile --tag dotnetandocker:v1
+      #run: docker build . --file Dockerfile --tag dotnetandocker:v1
