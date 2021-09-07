@@ -10,7 +10,7 @@ env:
   RG_NAME: meetup-rg
   ACR_NAME: acrmeetup42
   IMG_TAG: 'dotnetandocker:v1'
-  ACR_SERVER: 'acrmeetup42.azurecr.io'
+  ACRSERVER: 'acrmeetup42.azurecr.io'
 
 jobs:
 
@@ -31,7 +31,7 @@ jobs:
     - name: Construire et tager image Docker      
       run:  
         docker build . --file ./app/Dockerfile --tag ${{env.IMG_TAG}}
-        docker tag ${{env.IMG_TAG}} ${{ACR_SERVER}}/${{env.IMG_TAG}} 
+        docker tag ${{env.IMG_TAG}} ${{ACRSERVER}}/${{env.IMG_TAG}} 
     - name : "Connection Azure"
       uses: Azure/login@v1
       with:
