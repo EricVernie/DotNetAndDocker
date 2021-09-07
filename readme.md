@@ -49,19 +49,23 @@ Si vous souhaitez tester le déploiement et l'intégration continue il vous faut
 
 - Vérification de la version de .NET :
 
->dotnet --version
+```cmd
+dotnet --version
+5.0.400
+```
 
->**5.0.400**
-
->dotnet --info
+```cmd
+dotnet --info
+```
 
 - Lister les modèles disponibles :
 
->dotnet new --list
-
+```cmd
+dotnet new --list
+```
 ![Modeles](pictures/Modeles.png)
 
-- Créez un repertoire DotNetAndDocker et positionnez vous dans ce répertoire : 
+- Créez un repertoire DotNetAndDocker et positionnez vous dans ce répertoire :
 
 > cd DotNetDocker
 
@@ -165,8 +169,9 @@ docker ps
 |--|--|--|--|--|--|--|
 |f7d60abdf162 |  dotnetanddocker:v1|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
 
->docker exec -it f7d60abdf162 bash (Linux)
->docker exec -it f7d60abdf162 cmd (Windows)
+>docker exec -it [CONTAINER ID] bash (Linux)
+
+>docker exec -it [CONTAINER ID] cmd (Windows)
 
 # Automatiser le déploiement avec Github Action
 
@@ -215,7 +220,49 @@ Les étapes contenues dans le fichier yaml s'éxecute une à une jusqu'à la cr�
 
 Maintenant que l'image docker est construite, il faut la déployer sur Azure.
 
+### Préparation login dans Azure pour Github Action
 
+1. Il nous faut créer un groupe de ressources dans Azure qui accueillera nos images dockers
+
+    Sur le poste local
+
+    ```
+    az login
+
+    az account set --subscription [SUBSCRIPTION ID]
+
+    az group create -g "meetup-rg"  -l "Francecentral"
+
+    ```
+
+2. Créer un principal de service et l'ajouter comme contributeur au groupe de ressource **meetup-rg**
+
+    ```
+
+    az ad sp create-for-rbac --name "`sp-meetup" --sdk-auth --role contributor --scopes /subscriptions/{subscription-id}/resourceGroups/meetup-rg
+
+    ```
+
+    L'option --sdk-auth, permet de  récupèrer en sortie les informations de login (au format json) que nous réutiliserons par la suite dans Github Action
+
+    ```JSON
+    {
+    "clientId": [GUID],
+    "clientSecret": [GUID],
+    "subscriptionId": [GUID],
+    "tenantId": [GUID],
+    ...
+    }
+    ```
+
+3. Sur Github nous allons ajouter les informations de login à Azure
+
+![settings](./pictures/settings.png)
+
+
+```YAML
+
+```
 
 
 [Images officielles Docker pour .NET ](https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/net-core-net-framework-containers/official-net-docker-images)

@@ -23,3 +23,7 @@ jobs:
       run:  echo "Il faudrait tester le code !!"
     - name: Construire image Docker      
       run:  docker build . --file ./app/Dockerfile --tag dotnetandocker:v1
+      uses: Azure/login@v1
+      with:
+        # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+        creds: ${{secrets.AZURE_CREDENTIALS}}
