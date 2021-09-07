@@ -1,11 +1,11 @@
-name: Docker Image CI
+name: Meetup DotNet And Docker
 
 on:
- #push:
-    #branches: [ main ]
+ push:
+    branches: [ main ]
   #pull_request:
    # branches: [ main ]
-  workflow_dispatch: 
+  #workflow_dispatch: 
 jobs:
 
   build:
@@ -23,4 +23,4 @@ jobs:
     - name: Tester le code
       run:  echo "Il faudrait tester le code !!"
     - name: Construire image Docker      
-      run: DotNetAndDocker $ docker build . --file ./app/Dockerfile --tag dotnetandocker:v1
+      run:  docker build . --file ./app/Dockerfile --tag dotnetandocker:v1
