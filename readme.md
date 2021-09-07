@@ -243,7 +243,7 @@ Maintenant que l'image docker est construite, il faut la déployer sur Azure.
 
     ```
 
-    L'option --sdk-auth, permet de  récupèrer en sortie les informations de login (au format json) que nous réutiliserons par la suite dans Github Action
+    L'option **--sdk-auth**, permet de récupèrer en sortie les informations de login (au format json) que nous réutiliserons par la suite dans Github Action
 
     ```JSON
     {
@@ -257,11 +257,16 @@ Maintenant que l'image docker est construite, il faut la déployer sur Azure.
 
 3. Sur Github nous allons ajouter les informations de login à Azure
 
-![settings](./pictures/settings.png)
+    ![settings](./pictures/settings.png)
+
+    ![settings](./pictures/secret.png)
 
 
 ```YAML
-
+uses: Azure/login@v1
+      with:
+        # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+        creds: ${{secrets.AZURE_CREDENTIALS}}
 ```
 
 

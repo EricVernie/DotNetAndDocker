@@ -1,10 +1,16 @@
-name: Meetup DotNet And Docker (CI)
+name: Meetup DotNet And Docker 
 on:
  #push:
     #branches: [ main ]
   #pull_request:
    # branches: [ main ]
   workflow_dispatch: 
+
+env:
+  RG_NAME: meetup-rg
+  ACR_NAME: acrmeetup42
+  IMG_TAG: dotnetandocker:v1
+  ACR_SERVER: acrmeetup42.azurecr.io
 jobs:
 
   build:
@@ -21,10 +27,20 @@ jobs:
       run:  dotnet publish -c release ./app/DotNetAndDocker.csproj -o ./app/publier      
     - name: Tester le code
       run:  echo "Il faudrait tester le code !!"
-    - name: Construire image Docker      
-      run:  docker build . --file ./app/Dockerfile --tag dotnetandocker:v1
+    - name: Construire et tager image Docker      
+      run:  
+        docker build . --file ./app/Dockerfile --tag ${{env.IMG_TAG}}
+        docker tag ${{env.IMG_TAG}} ${{ACR_SERVER}}/${{env.IMG_TAG}} 
       uses: Azure/login@v1
       with:
         # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
         creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: "Déployer sur Azure"
+      run:  
+        az acr create --name ${{env.ACR_NAME}} --resource-group ${{env.RG_NAME}} --sku Basic --admin-enabled true --output none
+        passwordacr=`az acr credential show --resource-group ${{env.RG_NAME}} --name ${{env.ACR_NAME}} --query passwords[0].value --output tsv`
+        docker login ${{env.ACR_SERVER}} --username ${{env.ACR_NAME}} --password $passwordacr
+        docker push ${{ACR_SERVER}}/${{env.IMG_TAG}}
+
+      
     
