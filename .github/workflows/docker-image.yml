@@ -9,8 +9,8 @@ on:
 env:
   RG_NAME: meetup-rg
   ACR_NAME: acrmeetup42
-  IMG_TAG: 'dotnetandocker'
-  ACR_SERVER: 'acrmeetup42.azurecr.io'
+  IMG_TAG: 'dotnetandocker:v1'
+  ACR_SERVER: zou #'acrmeetup42.azurecr.io'
 
 jobs:
 
