@@ -24,4 +24,5 @@ jobs:
     - name: Tester le code
       run:  echo "Il faudrait tester le code !!"
     - name: Construire image Docker
+      run: echo docker build
       #run: docker build . --file Dockerfile --tag dotnetandocker:v1
