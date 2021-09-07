@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "DotNetAndDocker/1.0.0": {
+      "dotnetanddocker/1.0.0": {
         "runtime": {
-          "DotNetAndDocker.dll": {}
+          "dotnetanddocker.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "DotNetAndDocker/1.0.0": {
+    "dotnetanddocker/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

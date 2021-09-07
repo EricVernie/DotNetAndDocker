@@ -46,6 +46,10 @@ Cette config se base sur un os Windows Version **10.0.19041.1165**, vous pouvez 
 
 ![Modeles](pictures/Modeles.png)
 
+- Créez un repertoire DotNetAndDocker et positionnez vous dans ce répertoire : 
+
+> cd DotNetDocker
+
 - Création de l’application console :
 
 > dotnet new console -f net5.0 -o app -n DotNetAndDocker
@@ -72,7 +76,7 @@ Cette commande permet de construire et exécuter l'application.
 
 - Publier l'application console
 
-> dotnet publish -c Release -o .\publier
+>dotnet publish -c release ./app/dotnetanddocker.csproj -o ./app/publier    
 
 Publie le binaire de l'application console dans le répertoire **publier**
 
