@@ -1,4 +1,4 @@
-name: Meetup DotNet And Docker
+name: Meetup DotNet And Docker (CI)
 on:
  #push:
     #branches: [ main ]

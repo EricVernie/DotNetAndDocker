@@ -42,21 +42,21 @@ Cette config se base sur un os Windows Version **10.0.19041.1165**, vous pouvez 
 Si vous souhaitez tester le déploiement et l'intégration continue il vous faut :
 
 - Un compte Azure : [Compte Gratuit](https://azure.microsoft.com/fr-fr/free/)
+
 - Un compte Github : [Compte Gratuit](https://github.com/)
-
-
 
 # Création d'une application console .NET 5
 
-- Vérification de la version de .NET : 
->dotnet --version 
+- Vérification de la version de .NET :
+
+>dotnet --version
 
 >**5.0.400**
 
 >dotnet --info
 
+- Lister les modèles disponibles :
 
-- Lister les modèles disponibles : 
 >dotnet new --list
 
 ![Modeles](pictures/Modeles.png)
@@ -157,7 +157,9 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
 - Lister les containers encours d'exécution
 
->docker ps
+```bash
+docker ps
+```
 
 |CONTAINER ID|   IMAGE    | COMMAND  | CREATED |   STATUS |PORTS| NAMES|
 |--|--|--|--|--|--|--|
@@ -203,9 +205,15 @@ jobs:
 
 - Démarrez le Workflow manuellement
 
+![Workflow](./pictures/Workflow.png)
 
+Les étapes contenues dans le fichier yaml s'éxecute une à une jusqu'à la création de l'image docker
+
+![run](./pictures/runworkflow.png)
 
 ## Etape de déploiement continue (CD)]
+
+Maintenant que l'image docker est construite, il faut la déployer sur Azure.
 
 
 
