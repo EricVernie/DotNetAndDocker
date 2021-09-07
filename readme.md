@@ -3,10 +3,16 @@
 
 Démonstration simplifiée de l'utilisation de **.NET 5** de la containeurisation avec **docker** (containers Windows et Linux) et d'intégration continue d'une application Console avec **Github Action**
 
-Si vous souhaitez tester le déploiement et l'intégration continue il vous faut :
-
-- Un compte Azure : [Compte Gratuit](https://azure.microsoft.com/fr-fr/free/)
-- Un compte Github : [Compte Gratuit](https://github.com/)
+* [Préparation du poste de developpement Windows 10](Préparation-du-poste-de-developpement-(Windows-10))
+* [Abonnement Azure et Github](#Abonnement-Azure-et-Github)
+* [Création d'une application console .NET 5](#Création-d'une-application-console-.NET-5)    
+* [Containeurisation d'une application console .NET 5](#Containeurisation-d'une-application-console-.NET-5)
+    * [Création d'un container Linux](#-Création-d'un-container-Linux)
+    * [Création d'un container Windows](#-Création-d'un-container-Windows)
+    * [Se connecter à un container](#Se-connecter-à-un-container)
+* [Automatiser le déploiement avec Github Action](#Automatiser-le-déploiement-avec-Github-Action)
+    * [Etape d'intégration continue (CI)](#Etape-d'intégration-continue-(CI))
+    * [Etape de déploiement continue (CD)](#Etape-de-déploiement-continue-(CD))
 
 
 # Préparation du poste de developpement (Windows 10)
@@ -31,7 +37,16 @@ Cette config se base sur un os Windows Version **10.0.19041.1165**, vous pouvez 
 6. Installez **Windows Terminal**. [Cliquez ici](https://docs.microsoft.com/fr-fr/windows/terminal/get-started) pour plus d'informations.
 
 
-## Création d'une application console .NET 5
+# Abonnement Azure et Github
+
+Si vous souhaitez tester le déploiement et l'intégration continue il vous faut :
+
+- Un compte Azure : [Compte Gratuit](https://azure.microsoft.com/fr-fr/free/)
+- Un compte Github : [Compte Gratuit](https://github.com/)
+
+
+
+# Création d'une application console .NET 5
 
 - Vérification de la version de .NET : 
 >dotnet --version 
@@ -76,7 +91,7 @@ Cette commande permet de construire et exécuter l'application.
 
 - Publier l'application console
 
->dotnet publish -c release ./app/dotnetanddocker.csproj -o ./app/publier    
+>dotnet publish -c release ./app/dotnetanddocker.csproj -o ./app/publier
 
 Publie le binaire de l'application console dans le répertoire **publier**
 
@@ -88,19 +103,19 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
 ![console](pictures/Console.png)
     
-## Containeurisation d'une application console .NET 5
+# Containeurisation d'une application console .NET 5
 
 - Création du fichier Dockerfile.
 
     FROM mcr.microsoft.com/dotnet/runtime:5.0
 
-    COPY /publier /app
+    COPY /app/publier /app
 
     WORKDIR /app
 
     ENTRYPOINT [ "dotnet","DotNetAndDocker.dll" ]
 
-### Création d'un container Linux
+## Création d'un container Linux
 
 - Construire l'image Docker
 
@@ -121,7 +136,7 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 ![RunContainer](./pictures/RunContainer.png)
 
 
-### Création d'un container Windows
+## Création d'un container Windows
 
 
 - Basculer Docker Engine sur Container Windows
@@ -138,7 +153,7 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
 ![ContainerWindows](./pictures/ContainerWindows.png)
 
-### Se connecter à un container.
+## Se connecter à un container
 
 - Lister les containers encours d'exécution
 
@@ -149,10 +164,51 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 |f7d60abdf162 |  dotnetanddocker:v1|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
 
 >docker exec -it f7d60abdf162 bash (Linux)
-
-
-
 >docker exec -it f7d60abdf162 cmd (Windows)
+
+# Automatiser le déploiement avec Github Action
+
+## Etape d'intégration continue (CI)]
+
+- Sur Github, sélectionnez **Actions**
+
+![Actions](./pictures/Actions.png)
+
+- Choisir le modèle **Docker Image** comme point de départ.
+
+![ModeleAction](./pictures/ModeleAction.png)
+
+- Remplacez par le code Yaml suivant :
+
+```YAML
+name: Meetup DotNet And Docker
+on:
+  workflow_dispatch: 
+jobs:
+  build:
+    runs-on: ubuntu-latest  #Exécuter les actions sur un agent Linux
+    steps:
+    - uses: actions/checkout@v2   #Récupère le code source à partir du repository github
+    - name:  Récupère .NET
+      uses: actions/setup-dotnet@v1 
+      with:
+          dotnet-version: 5.0.x            
+    - name: Publier le code source
+      run:  dotnet publish -c release ./app/DotNetAndDocker.csproj -o ./app/publier      
+    - name: Tester le code
+      run:  echo "Il faudrait tester le code !!"
+    - name: Construire image Docker      
+      run:  docker build . --file ./app/Dockerfile --tag dotnetandocker:v1
+```
+
+- Démarrez le Workflow manuellement
+
+
+
+## Etape de déploiement continue (CD)]
+
+
+
 
 [Images officielles Docker pour .NET ](https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/net-core-net-framework-containers/official-net-docker-images)
 
