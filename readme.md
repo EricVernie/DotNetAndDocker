@@ -157,7 +157,7 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
 - Lister les containers encours d'exécution
 
-```bash
+```cmd
 docker ps
 ```
 
