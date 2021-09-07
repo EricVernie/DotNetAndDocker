@@ -31,6 +31,7 @@ jobs:
       run:  
         docker build . --file ./app/Dockerfile --tag ${{env.IMG_TAG}}
         docker tag ${{env.IMG_TAG}} ${{ACR_SERVER}}/${{env.IMG_TAG}} 
+    - name : "Connection Azure"
       uses: Azure/login@v1
       with:
         # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
