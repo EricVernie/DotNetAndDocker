@@ -8,9 +8,9 @@ on:
 
 env:
   RG_NAME: meetup-rg
-  ACR_NAME: acrmeetup42
+  ACR_NAME: meetup42acr
   IMAGE_NAME: dotnetanddocker
-  ACR_SERVER: acrmeetup42.azurecr.io
+  ACR_SERVER: meetup42acr.azurecr.io
 
 jobs:
 
