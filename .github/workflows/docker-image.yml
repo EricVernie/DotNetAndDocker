@@ -29,10 +29,10 @@ jobs:
         dotnet publish -c release ./app/DotNetAndDocker.csproj -o ./app/publier      
     - name: Tester le code
       run:  echo "Il faudrait tester le code !!"
-    - name: Construire et tager image Docker      
+    - name: Construire et etiqueter image Docker      
       run:  
         docker build . --file ./app/Dockerfile --tag ${{env.IMG_TAG}}
-  #      docker tag ${{env.IMG_TAG}} ${{ACR_SERVER}}/${{env.IMG_TAG}} 
+        docker tag ${{env.IMG_TAG}} ${{ACR_SERVER}}/${{env.IMG_TAG}} 
    # - name : "Connection Azure"
     #   uses: Azure/login@v1
     #   with:
