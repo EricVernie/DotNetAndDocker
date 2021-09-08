@@ -8,9 +8,9 @@ on:
 
 env:
   RG_NAME: meetup-rg
-  ACR_NAME: acrmeeetup42
-  IMAGE_NAME: dotnetandocker
-  ACR_SERVER: acrmeeetup42.azurecr.io
+  ACR_NAME: acrmeetup42
+  IMAGE_NAME: dotnetanddocker
+  ACR_SERVER: acrmeetup42.azurecr.io
 
 jobs:
 
@@ -30,10 +30,9 @@ jobs:
         dotnet publish -c release ./app/DotNetAndDocker.csproj -o ./app/publier      
     - name: Tester le code
       run:  | 
-            echo "Il faudrait tester le code !!"
-            du -h
+            echo "Il faudrait tester le code !!"            
     - name: Connexion à Azure Container Registry
-      uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+      uses: docker/login-action@v1.10.0
       with:
         registry: ${{ env.ACR_SERVER }}
         username: ${{ env.ACR_NAME }}
@@ -44,13 +43,18 @@ jobs:
       with:
         images: ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}:v1
     - name: Construire et pousser image Docker
-      # uses: docker/build-push-action@v2.7.0
-      # with:         
-      #     context: ./app/Dockerfile
-      #     push: true
-      #     tags: ${{ steps.meta.outputs.tags }}
-      #     labels: ${{ steps.meta.outputs.labels }}
-      run: |
-        docker build . --file ./app/Dockerfile --tag ${{ env.IMAGE_NAME }}:v1
-        docker tag ${{ env.IMAGE_NAME }}:v1 ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}:v1
-        docker push ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}:v1
+      uses: docker/build-push-action@v2.7.0
+      with:         
+          context: ./
+          file: ./app/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+    - name: Image digest
+      run: echo ${{ steps.docker_build.outputs.digest }}   
+          
+
+      # run: |
+      #   docker build . --file ./app/Dockerfile --tag ${{ env.IMAGE_NAME }}:v1
+      #   docker tag ${{ env.IMAGE_NAME }}:v1 ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}:v1
+      #   docker push ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}:v1

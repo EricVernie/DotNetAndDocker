@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotNetAndDocker
+namespace dotnetanddocker
 {
     class Program
     {

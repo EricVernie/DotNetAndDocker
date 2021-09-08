@@ -71,7 +71,7 @@ dotnet new --list
 
 - Création de l’application console :
 
-> dotnet new console -f net5.0 -o app -n DotNetAndDocker
+> dotnet new console -f net5.0 -o app -n dotnetanddocker
 
 Cette commande créée une application console net5 **DotNetAndDocker** dans le répertoire **app**
 
@@ -89,9 +89,9 @@ Cette commande créée une application console net5 **DotNetAndDocker** dans le 
 
 - Build et Run de l’application :
 
-> dotnet run
+> dotnet run --project .\app\dotnetanddocker.csproj
 
-Cette commande permet de construire et exécuter l'application.
+Cette commande permet de construire et exécuter l'application
 
 - Publier l'application console
 
@@ -101,7 +101,7 @@ Publie le binaire de l'application console dans le répertoire **publier**
 
 - Exécuter l'application
 
-> dotnet .\DotNetAndDocker.dll
+> dotnet .\app\publier\dotnetanddocker.dll 
 
 Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à la fois sur Windows mais aussi sur Linux à partir du même binaire.
 
@@ -117,13 +117,15 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
     WORKDIR /app
 
-    ENTRYPOINT [ "dotnet","DotNetAndDocker.dll" ]
+    ENTRYPOINT [ "dotnet","dotnetandocker.dll" ]
 
 ## Création d'un container Linux
 
 - Construire l'image Docker
 
->docker build -t dotnetanddocker:v1 -f Dockerfile .
+>docker build -t dotnetanddocker:v1 -f ./app/Dockerfile .
+
+(ne pas oublier le point à la fin)
 
 ![DockerBuild](./pictures/DockerBuild.png)
 
@@ -220,20 +222,32 @@ Les étapes contenues dans le fichier yaml s'éxecute une à une jusqu'à la cr�
 
 Maintenant que l'image docker est construite, il faut la déployer sur Azure.
 
-### Préparation login dans Azure pour Github Action
+### Création du registre de containers Azure
 
-1. Il nous faut créer un groupe de ressources dans Azure qui accueillera nos images dockers
+1. Sur le poste local exécutez les commandes suivantes
 
-    Sur le poste local
+    
 
     ```
     az login
 
     az account set --subscription [SUBSCRIPTION ID]
 
+    #Création du groupe de ressource 
+
     az group create -g "meetup-rg"  -l "Francecentral"
 
+    #Création du registre de containers azure
+
+    az acr create --name meetup42acr --resource-group "meetup-rg" --sku Basic --admin-enabled true --output none
+
+    #Récupère le mot de passe 
+
+    az acr credential show --resource-group "meetup-rg" --name meetup42acr --query passwords[0].value --output tsv
+
     ```
+
+    >**Note:** N'oubliez pas de récupèrer et copier le mot de passe du registre
 
 2. Créer un principal de service et l'ajouter comme contributeur au groupe de ressource **meetup-rg**
 
@@ -255,11 +269,16 @@ Maintenant que l'image docker est construite, il faut la déployer sur Azure.
     }
     ```
 
-3. Sur Github nous allons ajouter les informations de login à Azure
+3. Sur Github nous allons ajouter en tant que secret les informations de login à Azure
 
-    ![settings](./pictures/settings.png)
+    - Settings
+      ![settings](./pictures/settings.png)
+    - New Repository secret
+      ![settings](./pictures/newsecret.png)
+    - Nom du secret : AZURE_CREDENTIALS
 
-    ![settings](./pictures/secret.png)
+    - Copiez le json obtenu plus haut
+      ![settings](./pictures/secret.png)
 
 
 ```YAML
@@ -268,6 +287,16 @@ uses: Azure/login@v1
         # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
         creds: ${{secrets.AZURE_CREDENTIALS}}
 ```
+
+4. de la même manière, nous allons ajouter le secret correspondant au mot de passe du registre de containers Azure.
+
+  - Nom du secret : PASSREGISTRY
+
+  - Copiez le mot de passe du registre de containers Azure
+
+
+  
+
 
 
 [Images officielles Docker pour .NET ](https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/net-core-net-framework-containers/official-net-docker-images)
