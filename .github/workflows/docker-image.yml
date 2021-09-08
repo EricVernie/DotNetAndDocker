@@ -27,7 +27,7 @@ jobs:
           dotnet-version: 5.0.x            
     - name: Publier le code source
       run:  
-        dotnet publish -c release ./app/DotNetAndDocker.csproj -o ./app/publier      
+        dotnet publish -c release ./app/dotnetanddocker.csproj -o ./app/publier      
     - name: Tester le code
       run:  | 
             echo "Il faudrait tester le code !!"            
