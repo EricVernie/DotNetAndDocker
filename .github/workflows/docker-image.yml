@@ -1,10 +1,10 @@
 name: Meetup DotNet And Docker 
 on:
- #push:
-    #branches: [ main ]
+ push:
+    branches: [ main ]
   #pull_request:
    # branches: [ main ]
-  workflow_dispatch: 
+  #workflow_dispatch: 
 
 env:
   RG_NAME: meetup-rg
@@ -33,7 +33,7 @@ jobs:
     - name: Construire et etiqueter image Docker      
       run:  
         docker build . --file ./app/Dockerfile --tag ${{ env.IMG_TAG }}
-        docker tag ${{ env.IMG_TAG }} ${{ ACR_SERVER }}/${{ env.IMG_TAG }} 
+        #docker tag ${{ env.IMG_TAG }} ${{ ACR_SERVER }}/${{ env.IMG_TAG }} 
    # - name : "Connection Azure"
     #   uses: Azure/login@v1
     #   with:
