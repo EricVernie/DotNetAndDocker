@@ -30,10 +30,22 @@ jobs:
         dotnet publish -c release ./app/DotNetAndDocker.csproj -o ./app/publier      
     - name: Tester le code
       run:  echo "Il faudrait tester le code !!"
-    - name: Construire et etiqueter image Docker      
+    - name: Connexion à Azure Container Registry
       uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
       with:
         registry: ${{ env.ACR_SERVER }}
         username: ${{ env.ACR_NAME }}
         password: ${{ secrets.PASSREGISTRY }}
+    - name: Extraire les métadonnées docker
+      id: meta
+      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+      with:
+        images: ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}
+    - name: Construire et pousser image Docker
+      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      with:
+          context: ./app/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
