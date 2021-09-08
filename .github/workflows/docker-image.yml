@@ -17,7 +17,7 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest  #Exécuter les actions sur un agent Linux
+    runs-on: ubuntu-latest  
     
     steps:
 
@@ -56,9 +56,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}   
-          
-
-      # run: |
-      #   docker build . --file ./app/Dockerfile --tag ${{ env.IMAGE_NAME }}:v1
-      #   docker tag ${{ env.IMAGE_NAME }}:v1 ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}:v1
-      #   docker push ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}:v1
+     
