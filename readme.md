@@ -49,35 +49,39 @@ Si vous souhaitez tester le déploiement et l'intégration continue il vous faut
 
 - Vérification de la version de .NET :
 
-```cmd
+```bash
 dotnet --version
 5.0.400
 ```
 
-```cmd
+```bash
 dotnet --info
 ```
 
 - Lister les modèles disponibles :
 
-```cmd
+```bash
 dotnet new --list
 ```
 ![Modeles](pictures/Modeles.png)
 
-- Créez un repertoire DotNetAndDocker et positionnez vous dans ce répertoire :
+- Créez un repertoire **dotnetanddocker** (en minuscule) et positionnez vous dans ce répertoire :
 
-> cd DotNetDocker
+> cd dotnetdocker
 
-- Création de l’application console :
+- Créez de l’application console :
 
-> dotnet new console -f net5.0 -o app -n dotnetanddocker
+```bash
+dotnet new console -f net5.0 -o app -n dotnetanddocker
+```
 
 Cette commande créée une application console net5 **DotNetAndDocker** dans le répertoire **app**
 
 - Ouvrez le code dans VS Code (ou dans tout autres éditeurs):
 
-> code  .
+```bash
+code  .
+```
 
 - Ouvrez le fichier **program.cs** et ajoutez les lignes suivantes :
 
@@ -89,19 +93,26 @@ Cette commande créée une application console net5 **DotNetAndDocker** dans le 
 
 - Build et Run de l’application :
 
-> dotnet run --project .\app\dotnetanddocker.csproj
+```bash
+dotnet run --project .\app\dotnetanddocker.csproj
+```
+
 
 Cette commande permet de construire et exécuter l'application
 
-- Publier l'application console
+- Publiez l'application console
 
->dotnet publish -c release ./app/dotnetanddocker.csproj -o ./app/publier
+```bash
+dotnet publish -c release ./app/dotnetanddocker.csproj -o ./app/publier
+```
 
 Publie le binaire de l'application console dans le répertoire **publier**
 
-- Exécuter l'application
+- Exécutez l'application
 
-> dotnet .\app\publier\dotnetanddocker.dll
+```bash
+dotnet .\app\publier\dotnetanddocker.dll
+```
 
 Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à la fois sur Windows mais aussi sur Linux à partir du même binaire.
 
@@ -121,41 +132,50 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
 ## Création d'un container Linux
 
-- Construire l'image Docker
+- Construisez l'image Docker
 
->docker build -t dotnetanddocker:v1 -f ./app/Dockerfile .
+```bash
+docker build -t dotnetanddocker:v1 -f ./app/Dockerfile .
+```
+>**Note:** Ne pas oublier le point à la fin de la commande
 
-(ne pas oublier le point à la fin)
+  ![DockerBuild](./pictures/DockerBuild.png)
 
-![DockerBuild](./pictures/DockerBuild.png)
-
->docker images
+```bash
+docker images
+```
 
 |REPOSITORY|TAG|IMAGE ID|       CREATED |        SIZE|
 |--|--|--|--|--|
 |dotnetanddocker |  v1     |   71457a3d3799|   2 minutes ago|   186MB|
 
-- Exécuter l'application dans un container Linux
+- Exécutez l'application dans un container Linux
 
-> Docker run --rm -it dotnetanddocker:v1
+```bash
+Docker run --rm -it dotnetanddocker:v1
+```
 
-![RunContainer](./pictures/RunContainer.png)
+  ![RunContainer](./pictures/RunContainer.png)
 
 
 ## Création d'un container Windows
 
 
-- Basculer Docker Engine sur Container Windows
+- Basculez Docker Engine sur Container Windows
 
 ![switch](./pictures/switch.png)
 
-- Construire l'image Docker
+- Construisez l'image Docker
 
->docker build -t dotnetanddocker:v1 -f Dockerfile .
+```bash
+docker build -t dotnetanddocker:v1 -f Dockerfile .
+```
 
-- Exécuter l'application dans un container Windows
+- Exécutez l'application dans un container Windows
 
-> Docker run --rm -it dotnetanddocker:v1
+```bash
+Docker run --rm -it dotnetanddocker:v1
+```
 
 ![ContainerWindows](./pictures/ContainerWindows.png)
 
@@ -163,12 +183,12 @@ Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à
 
 - Lister les containers encours d'exécution
 
-```cmd
+```bash
 docker ps
 ```
 
-|CONTAINER ID|   IMAGE    | COMMAND  | CREATED |   STATUS |PORTS| NAMES|
-|--|--|--|--|--|--|--|
+|CONTAINER ID  |     IMAGE    | COMMAND  | CREATED |   STATUS |PORTS| NAMES|
+|---|---|---|---|---|---|---|
 |f7d60abdf162 |  dotnetanddocker:v1|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
 
 >docker exec -it [CONTAINER ID] bash (Linux)
@@ -300,28 +320,30 @@ docker ps
       ![settings](./pictures/secret.png)
 
 
-7. de la même manière, vous allez ajouter le secret correspondant au mot de passe du registre de containers Azure.
+7. De la même manière, vous allez ajouter le secret correspondant au mot de passe du registre de containers Azure.
 
    - Nom du secret : PASSREGISTRY
 
     - Copiez le mot de passe du registre de containers Azure
 
 
+8. Démarrez le Workflow manuellement
+
+    ![Workflow](./pictures/Workflow.png)
+
+    Les étapes contenues dans le fichier yaml s'éxecute une à une jusqu'au déploiement de l'image sur Azure.
+
+    ![run](./pictures/runworkflow.png)
 
 
 
 
+Enfin si vous souhaitez tester si tout a fonctionné exécutez sur le poste de développement les commandes suivantes
 
-[Images officielles Docker pour .NET ](https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/net-core-net-framework-containers/official-net-docker-images)
+```bash
+docker login  meetup42acr.azurecr.io -u meetup42acr -p [PASSWORD]
+```
 
-https://hub.docker.com/_/microsoft-dotnet-runtime/
-
-
-https://hub.docker.com/_/microsoft-dotnet/?ref=login
-
-docker run --it mcr.microsoft.com/windows/nanoserver:2004 cmd
-
-
-Demo
-
-https://docs.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows
+```bash
+docker run -it meetup42acr.azurecr.io/dotnetanddocker:1.0.0 
+```
