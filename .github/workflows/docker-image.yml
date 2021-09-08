@@ -17,10 +17,15 @@ jobs:
   build:
 
     runs-on: ubuntu-latest  #Exécuter les actions sur un agent Linux
+    permissions:
+      contents: read
+      packages: write
+
 
     steps:
-    - uses: actions/checkout@v2   #Récupère le code source à partir du repository github
-    - name:  Recupere .NET
+    - name: Récupère le code source
+    - uses: actions/checkout@v2   
+    - name:  Récupère .NET
       uses: actions/setup-dotnet@v1 
       with:
           dotnet-version: 5.0.x            
@@ -31,8 +36,8 @@ jobs:
       run:  echo "Il faudrait tester le code !!"
     - name: Construire et etiqueter image Docker      
       run:  
-        docker build . --file ./app/Dockerfile --tag ${{env.IMG_TAG}}
-        docker tag ${{env.IMG_TAG}} ${{ACR_SERVER}}/${{env.IMG_TAG}} 
+        docker build . --file ./app/Dockerfile --tag ${{ env.IMG_TAG }}
+        docker tag ${{ env.IMG_TAG }} ${{ ACR_SERVER }}/${{ env.IMG_TAG }} 
    # - name : "Connection Azure"
     #   uses: Azure/login@v1
     #   with:
