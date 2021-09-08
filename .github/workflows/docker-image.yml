@@ -1,11 +1,11 @@
 name: Meetup DotNet And Docker 
 on:
- push:
-    branches: [ main ]
+ #push:
+    #branches: [ main ]
     
   #pull_request:
    # branches: [ main ]
-  #workflow_dispatch: 
+  workflow_dispatch: 
 
 env:
   RG_NAME: meetup-rg
