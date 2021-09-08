@@ -8,9 +8,9 @@ on:
 
 env:
   RG_NAME: meetup-rg
-  ACR_NAME: acrmeetup42
-  IMG_TAG: dotnetandocker:v1
-  ACR_SERVER: acrmeetup42.azurecr.io
+  ACR_NAME: acrmeeetup42
+  IMAGE_NAME: ${{ github.repository }}  
+  ACR_SERVER: acrmeeetup42.azurecr.io
 
 jobs:
 
@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest  #Exécuter les actions sur un agent Linux
     
     steps:
+
     - uses: actions/checkout@v2   
     - name:  Récupère .NET
       uses: actions/setup-dotnet@v1 
@@ -30,6 +31,9 @@ jobs:
     - name: Tester le code
       run:  echo "Il faudrait tester le code !!"
     - name: Construire et etiqueter image Docker      
-      run:  
-        docker build . --file ./app/Dockerfile --tag ${{ env.IMG_TAG }}
-  
+      uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+      with:
+        registry: ${{ env.ACR_SERVER }}
+        username: ${{ env.ACR_NAME }}
+        password: ${{ secrets.PASSREGISTRY }}
+
