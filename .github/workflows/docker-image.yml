@@ -9,7 +9,7 @@ on:
 env:
   RG_NAME: meetup-rg
   ACR_NAME: acrmeeetup42
-  IMAGE_NAME: ${{ github.repository }}  
+  IMAGE_NAME: dotnetandocker
   ACR_SERVER: acrmeeetup42.azurecr.io
 
 jobs:
@@ -42,12 +42,15 @@ jobs:
       id: meta
       uses: docker/metadata-action@v3.5.0
       with:
-        images: ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}
+        images: ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}:v1
     - name: Construire et pousser image Docker
-      uses: docker/build-push-action@v2.7.0
-      with:         
-          context: ./app/Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
+      # uses: docker/build-push-action@v2.7.0
+      # with:         
+      #     context: ./app/Dockerfile
+      #     push: true
+      #     tags: ${{ steps.meta.outputs.tags }}
+      #     labels: ${{ steps.meta.outputs.labels }}
+      run: |
+        docker build . --file ./app/Dockerfile --tag ${{ env.IMAGE_NAME }}:v1
+        docker tag ${{ env.IMAGE_NAME }}:v1 ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}:v1
+        docker push ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}:v1
