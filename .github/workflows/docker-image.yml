@@ -19,7 +19,6 @@ jobs:
     runs-on: ubuntu-latest  #Exécuter les actions sur un agent Linux
     
     steps:
-    - name: Récupère le code source
     - uses: actions/checkout@v2   
     - name:  Récupère .NET
       uses: actions/setup-dotnet@v1 
