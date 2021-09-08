@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2   #Récupère le code source à partir du repository github
-    - name:  Récupère .NET
+    - name:  Recupere .NET
       uses: actions/setup-dotnet@v1 
       with:
           dotnet-version: 5.0.x            
@@ -38,7 +38,7 @@ jobs:
       with:
         # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
         creds: ${{secrets.AZURE_CREDENTIALS}}
-    - name: "Déployer sur Azure"
+    - name: "Deployer sur Azure"
       run: |  
         az acr create --name ${{env.ACR_NAME}} --resource-group ${{env.RG_NAME}} --sku Basic --admin-enabled true --output none
         passwordacr=`az acr credential show --resource-group ${{env.RG_NAME}} --name ${{env.ACR_NAME}} --query passwords[0].value --output tsv`
