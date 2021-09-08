@@ -42,6 +42,8 @@ jobs:
       uses: docker/metadata-action@v3.5.0
       with:
         images: ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=semver
     - name: Construire et pousser image Docker
       uses: docker/build-push-action@v2.7.0
       with:         
