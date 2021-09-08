@@ -17,11 +17,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest  #Exécuter les actions sur un agent Linux
-    permissions:
-      contents: read
-      packages: write
-
-
+    
     steps:
     - name: Récupère le code source
     - uses: actions/checkout@v2   
