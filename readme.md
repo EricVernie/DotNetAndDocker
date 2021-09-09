@@ -239,9 +239,7 @@ Ici notre fichier Dockerfile est simplifié au maximum, il contient les instruct
 
 ## Génération d'une image et d'un conteneur pour Windows
 
-Pour créer une image et un conteneur Windows, il faut basculer Docker pour qu'il utilise Windows, comme illustré sur l'image suivante.
-
-- Bascule Docker sur les conteneurs Windows
+Pour créer une image et un conteneur Windows, il faut basculer Docker pour qu'il utilise Windows, comme illustré sur l'image suivante :
 
   ![switch](./pictures/switch.png)
 
