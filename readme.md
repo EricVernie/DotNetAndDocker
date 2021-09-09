@@ -1,10 +1,11 @@
 
 Dans cet article nous allons aborder :
-- La création d'une application console [.NET 5](https://docs.microsoft.com/fr-fr/dotnet/fundamentals/).
 
-- La conteneuriser avec [Docker](https://docs.docker.com/).
+- La création d'une application console [.NET 5](https://docs.microsoft.com/fr-fr/dotnet/fundamentals/)
 
-- Et la déployer sur [Azure](https://docs.microsoft.com/fr-fr/azure) à l'aide des [actions Github](https://docs.github.com/en/actions). 
+- La conteneuriser avec [Docker](https://docs.docker.com/)
+
+- Et la déployer sur [Azure](https://docs.microsoft.com/fr-fr/azure) à l'aide des [actions Github](https://docs.github.com/en/actions)
 
 
 # Préparation du poste de developpement (Windows 10)
@@ -38,7 +39,7 @@ Si vous souhaitez tester le déploiement et l'intégration continue, il vous fau
 
 # Etape 1 : Création d'une application console .NET 5
 
-- Vérification de la version de .NET installée :
+- Vérifiez la version de .NET installée
 
   ```bash
   dotnet --version
@@ -59,7 +60,7 @@ Si vous souhaitez tester le déploiement et l'intégration continue, il vous fau
   ...
   ```
 
-- Lister les modèles disponibles :
+- Listez les modèles disponibles :
 
   ```bash
   dotnet new --list
@@ -76,16 +77,14 @@ Si vous souhaitez tester le déploiement et l'intégration continue, il vous fau
   |...|...|      ... | ...|
   
 
-  Nous allons utiliser ici le modèle **console** de la manière suivante : 
-
-1. Créez un répertoire **dotnetanddocker** (en minuscule) et positionnez vous dans ce répertoire :
+1. Créez un répertoire **dotnetanddocker** (en minuscule) et positionnez vous dans ce répertoire
 
     ```bash
     cd dotnetdocker
     ```
     >**Remarque :** Les chemins d'accès lors de l'exécution de toutes les instructions qui vont suivre, seront relatif à ce répertoire.
 
-2. Créez l’application console :
+2. Créez l’application console
 
     ```bash
     dotnet new console -f net5.0 -o app -n dotnetanddocker
@@ -93,13 +92,13 @@ Si vous souhaitez tester le déploiement et l'intégration continue, il vous fau
 
     Cette commande créée une application console net5 nommée **dotnetanddocker** dans le répertoire **.\app**
 
-3. Ouvrez le code dans Visual Studio Code (ou dans tout autre éditeur):
+3. Ouvrez le code dans Visual Studio Code ou dans tout autre éditeur
 
     ```bash
     code  .
     ```
 
-4. Ajoutez les lignes suivantes dans le fichier **program.cs** :
+4. Ajoutez les lignes suivantes dans le fichier **program.cs**
 
     ```CSHARP
     Console.WriteLine(System.Environment.OSVersion);
@@ -108,7 +107,7 @@ Si vous souhaitez tester le déploiement et l'intégration continue, il vous fau
     ```
     L'instruction _Console.WriteLine(System.Environment.OSVersion)_ nous permettra de vérifier le système d'exploitation sur lequel tournera l'application.
 
-5. Construisez et exécutez l’application :
+5. Construisez et exécutez l’application
 
     ```bash
     dotnet run --project .\app\dotnetanddocker.csproj
@@ -137,7 +136,6 @@ Si vous souhaitez tester le déploiement et l'intégration continue, il vous fau
     dotnet .\app\publier\dotnetanddocker.dll
     ```
 
-
     Comme vous le voyez sur l'image suivante, l'application console .NET 5 tourne à la fois sur Windows mais aussi sur Linux à partir du même binaire.
 
     ![console](pictures/Console.png)
@@ -153,7 +151,7 @@ Pour générer cette image, il nous faut un fichier texte (en régle générale 
 [Introduction aux conteneurs docker avec .NET 5](https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/container-docker-introduction/)
 
 
-## Création du fichier Dockerfile.
+## Création du fichier Dockerfile
 
     FROM mcr.microsoft.com/dotnet/runtime:5.0
 
@@ -165,19 +163,19 @@ Pour générer cette image, il nous faut un fichier texte (en régle générale 
 
 Ici notre fichier Dockerfile est simplifié au maximum, il contient les instructions suivantes :
 
-- L'image de base du runtime .NET 5 à utiliser dans notre image.
+- L'image de base du runtime .NET 5 à utiliser dans notre image
 
   **FROM mcr.microsoft.com/dotnet/runtime:5.0**
 
-- La copie des binaires de l'application se trouvant sur le poste local dans le répertoire **/app/publier**, vers le répertoire **/app** qui sera crée lors de la copie.
+- La copie des binaires de l'application se trouvant sur le poste local dans le répertoire **/app/publier**, vers le répertoire **/app** qui sera crée lors de la copie
 
   **COPY /app/publier /app**
 
-- L'instruction qui permet de se positionner dans le répertoire **/app** avant l'exécution des instructions qui suivent.
+- L'instruction qui permet de se positionner dans le répertoire **/app** avant l'exécution des instructions qui suivent
 
   **WORKDIR /app**
 
-- L'instruction pour exécuter l'application console.
+- L'instruction pour exécuter l'application console
 
   
   **ENTRYPOINT [ "dotnet","dotnetandocker.dll" ]**
@@ -203,7 +201,7 @@ Ici notre fichier Dockerfile est simplifié au maximum, il contient les instruct
         
   _Génération d'une image Linux_
 
-- Lister les images sur le poste local.
+- Listez les images sur le poste local
   ```bash
   docker images
   ```
@@ -228,7 +226,8 @@ Ici notre fichier Dockerfile est simplifié au maximum, il contient les instruct
   |-i|Exécute le conteneur en mode interactif. Cela permet au conteneur de ne pas s'arrêter automatiquement.|
   |dotnetanddocker:1.0.0| Image de base utilisée pour la création du conteneur.|
 
-- Exécutez la commande suivante, pour lister les conteneurs en cours d'exécution.
+- Exécutez la commande suivante, pour lister les conteneurs en cours d'exécution
+
   ```bash
   Docker ps
   ```
@@ -245,7 +244,8 @@ Pour créer une image et un conteneur Windows, il faut basculer Docker pour qu'i
 
   _Basculement sur les conteneurs Windows_
 
-- Listez les conteneurs disponibles : 
+- Listez les conteneurs disponibles
+
   ```bash
     docker images
   ```
@@ -255,7 +255,7 @@ Pour créer une image et un conteneur Windows, il faut basculer Docker pour qu'i
     |--|--|--|--|--|
 
 
-- Ensuite, pour générer une image docker,  il suffit d'exécuter les mêmes commandes que précedement.
+- Ensuite, pour générer une image docker,  il suffit d'exécuter les mêmes commandes que précedement
 
   ```bash
   docker build --tag dotnetanddocker:1.0.0 --file ./app/Dockerfile .
@@ -273,7 +273,7 @@ Pour créer une image et un conteneur Windows, il faut basculer Docker pour qu'i
 Parfois il est nécessaire d'aller vérifier directement dans le conteneur si tous les élèments nécessaire ont bien été copiés, installés etc. Pour cela il est possible d'exécuter un shell de commande en mode interactif.
 
 
-1. Tout d'abord il faut lister les conteneurs encours d'exécution pour récupèrer leur ID.
+1. Tout d'abord il faut lister les conteneurs encours d'exécution pour récupèrer l'ID du conteneur qui nous intéresse
 
     ```bash
     docker ps
@@ -285,7 +285,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
   |---|---|---|---|---|---|---|
   |f7d60abdf162 |  dotnetanddocker:v1|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
 
-2. Ensuite il suffit d'exécuter la commande suivante : 
+2. Ensuite il suffit d'exécuter la commande suivante avec le bon ID
 
     ```bash
       # Linux 
@@ -296,7 +296,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
       # Windows
       docker exec -it [conteneur ID] cmd
     ```
-    Exécute le shell bash ou cmd dans le conteneur en mode interactif.
+    L'option -it permet d'exécuter le shell bash ou cmd dans le conteneur en mode interactif.
 
     ![Linux](./pictures/ConnectionLinux.png)
     _Connection au conteneur Linux_
@@ -326,7 +326,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     
     >**Note:** Avant d'exécuter la commande **git add .**, il serait de bon ton de supprimer les répertoires ./app/obj, ./app/bin, ./app/publier pour éviter de les ajouter au commit initial, sinon vous pouvez ajouter le fichier .gitignore qui se trouve dans ce repo.
 
-3. Ajoutez le repo distant github au repo local et poussez les modifications sur le repo github.
+3. Ajoutez le repo distant github au repo local git et poussez les modifications sur le repo github
 
     ```bash
       
@@ -337,12 +337,12 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
       git push -u origin main
 
     ```
-    Remplacez [user] et [repo] par votre nom github et le nom du repo que vous avez donné à l'étape 1.
+    Remplacez [user] et [repo] par votre nom github et le nom du repo que vous avez donné lors de la création du repo.
 
 
     [Référence des commandes git](https://git-scm.com/docs)
 
-4. Sur le poste local exécutez les commandes azure suivantes : 
+4. Sur le poste local exécutez les commandes Azure suivantes : 
 
     ```bash
     az login
@@ -372,7 +372,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 
       [Documentation Azure Container Registry](https://docs.microsoft.com/fr-fr/azure/container-registry/)
 
-5. Création d'un principal de service et l'ajouter comme contributeur au groupe de ressources **[NOM DU GROUPE DE RESSOURCES]**
+5. Création d'un principal de service et l'ajouter comme **contributeur** au groupe de ressources
 
     ```
 
@@ -392,7 +392,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     }
     ```
     
-    Copiez le JSON, nous le réutiliserons plus tard avec les actions Github. Ces informations nous servirons à nous connecter à Azure.
+    Copiez le JSON, nous le réutiliserons plus tard avec les actions Github. 
 
     [Principal de Service](https://docs.microsoft.com/fr-fr/azure/active-directory/fundamentals/service-accounts-principal)
     
@@ -402,7 +402,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 
     ![Actions](./pictures/Actions.png)
 
-7. Choisir le modèle **Docker Image** comme point de départ.
+7. Choisir le modèle **Docker Image** comme point de départ
 
     ![ModeleAction](./pictures/ModeleAction.png)
 
@@ -471,7 +471,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     
     [Documentation Github Actions](https://docs.github.com/en/enterprise-server@3.2/actions)
 
-9. Sur Github ajoutez en tant que secret les informations de login à Azure.
+9. Sur Github ajoutez en tant que secret les informations de login à Azure
 
     - Settings
       ![settings](./pictures/settings.png)
@@ -483,7 +483,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
       ![settings](./pictures/secret.png)
 
 
-10. De la même manière, vous allez ajouter le secret correspondant au mot de passe du registre de conteneurs Azure.
+10. De la même manière, vous allez ajouter le secret correspondant au mot de passe du registre de conteneurs Azure
 
    - Nom du secret : PASSREGISTRY
 
@@ -498,18 +498,20 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 
     ![run](./pictures/runworkflow.png)
 
-12. Vérifiez sur [le portail Azure](https://portal.azure.com) que l'image **dotnetanddocker** est bien présente.
+    >**Note:** Si vous souhaitez que le déclenchement du workflow démarre lorsque la commande **git push** est invoquée, décommenter les lignes, **push:** et **branches: [ main ]** du fichier yaml.
+
+12. Vérifiez sur [le portail Azure](https://portal.azure.com) que l'image **dotnetanddocker** est bien présente
 
     ![AzurePortal](./pictures/AzurePortal.png)
 
-13. Testez l'application.
+13. Testez l'application
     
-    13.1 Se connecter au registre de conteneur Azure.
+    13.1 Se connecter au registre de conteneur Azure
     ```bash
     docker login  [NOM DU REGISTRE].azurecr.io -u [NOM DU REGISTRE] -p [MOT DE PASSE DU REGISTRE]
     ```
 
-    13.2 Exécutez l'application.
+    13.2 Exécutez l'application
 
     ```bash
     docker run -it [NOM DU REGISTRE].azurecr.io/dotnetanddocker:1.0.0 
@@ -545,3 +547,5 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     [Principal de Service](https://docs.microsoft.com/fr-fr/azure/active-directory/fundamentals/service-accounts-principal)
 
     [Documentation Azure RBAC](https://docs.microsoft.com/fr-fr/azure/role-based-access-control/)
+    
+    [Didacticiel : Conteneuriser une application .NET Core](https://docs.microsoft.com/fr-fr/dotnet/core/docker/build-container?tabs=windows)
