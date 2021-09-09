@@ -1,5 +1,10 @@
 
-Dans cet article nous allons aborder la création d'une application console [.NET 5](https://docs.microsoft.com/fr-fr/dotnet/fundamentals/), la containeuriser avec [Docker](https://docs.docker.com/) et la déployer sur [Azure](https://docs.microsoft.com/fr-fr/azure) à l'aide des [actions Github](https://docs.github.com/en/actions)
+Dans cet article nous allons aborder :
+- La création d'une application console [.NET 5](https://docs.microsoft.com/fr-fr/dotnet/fundamentals/).
+
+- La conteneuriser avec [Docker](https://docs.docker.com/).
+
+- Et la déployer sur [Azure](https://docs.microsoft.com/fr-fr/azure) à l'aide des [actions Github](https://docs.github.com/en/actions). 
 
 
 # Préparation du poste de developpement (Windows 10)
@@ -11,9 +16,7 @@ Notre poste de développement se base sur un OS Windows Version **10.0.19041.116
 2. [Installez le **Kit de développement .NET 5**.](https://docs.microsoft.com/fr-fr/dotnet/core/install/windows?tabs=net50)
 
 2. [Installez **.NET sur linux**.](https://docs.microsoft.com/fr-fr/dotnet/core/install/linux)
-
-    > **Remarque** : Si vous souhaitez **seulement tester sur linux**, vous pouvez n'installer que le runtime .NET 5 sous linux et non pas l'intégralité du SDK.
-
+    
 3. [Installez **Visual Studio Code**.](https://code.visualstudio.com/) (Optionnel)
 
 4. [Installez Git pour Windows](https://git-scm.com/download/win)
@@ -80,7 +83,7 @@ Nous allons utiliser ici le modèle **console** de la manière suivante :
     ```bash
     cd dotnetdocker
     ```
-    >**Remarque :** Toutes les instructions qui vont suivre seront relativent à ce répertoire.
+    >**Remarque :** Les chemins d'accès lors de l'exécution de toutes les instructions qui vont suivre, seront relatif à ce répertoire.
 
 2. Créez l’application console :
 
@@ -141,7 +144,7 @@ Nous allons utiliser ici le modèle **console** de la manière suivante :
 
     -_Exécution de l'application sur Linux et Windows_
     
-# Conteneurisation d'une application console .NET 5 avec Docker
+# Etape 2: Conteneurisation d'une application console .NET 5 avec Docker
 
 La conteneurisation d'une application passe par la génération d'une **image** qui contiendra tous les élèments nécessaires pour que l'application fonctionne.
 
@@ -305,7 +308,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     Vous remarquerez que par défaut nous nous positionons dans le répertoire **/app** ou a été copié les binaires de notre application console.
 
 
-# Automatiser le déploiement sur Azure avec Github Action (Optionel)
+# Etape 3 : Automatiser le déploiement sur Azure avec Github Action (Optionnel)
 
 1. Tout d'abord il vous faut créer un nouveau repo dans Github. https://docs.github.com/en/get-started/quickstart/create-a-repo
 
@@ -313,14 +316,17 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 2. Positionnez vous dans le répertoire **dotnetanddocker** et exécutez les commandes suivantes :
 
     ```bash
-
+      # Initialiisation du nouveau repo git
       git init
-
+      
+      # Ajout de tous les fichiers sauf ceux définies dans le fichier .gitignore
       git add .
 
+      # Commit des changements
       git commit -m "Commit Initial"
 
     ```
+    
     >**Note:** avant d'exécuter la commande **git add .**, il serait de bon ton de supprimer les répertoires ./app/obj, ./app/bin, ./app/publier pour éviter de les ajouter au commit initial, sinon vous pouvez ajouter le fichier .gitignore qui se trouve dans ce repos.
 
 3. Ajoutez le repo distant github au repo local et poussez les modifications sur le repo github.
@@ -346,11 +352,11 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 
     az account set --subscription [SUBSCRIPTION ID]
 
-    #Création du groupe de ressource 
+    #Création du groupe de ressources 
 
     az group create -g [NOM DU GROUPE DE RESSOURCES]  -l "Francecentral"
 
-    #Création du registre de conteneurs azure
+    #Création du registre de conteneurs Azure
 
     az acr create --name [NOM DU REGISTRE] --resource-group [NOM DU GROUPE DE RESSOURCES]  --sku Basic --admin-enabled true --output none
 
@@ -385,7 +391,9 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     ...
     }
     ```
-    Copiez le JSON, nous le réutiliserons plus tard avec les actions Github.
+    
+    Copiez le JSON, nous le réutiliserons plus tard avec les actions Github. Ces informations nous servirons à nous connecter à Azure.
+
 
 6. Sur Github, sélectionnez **Actions**
 
@@ -400,51 +408,52 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     ```YAML
     name: Meetup DotNet And Docker 
     on:
-      workflow_dispatch: 
-    env:
+      #push:
+      #branches: [ main ] # Déclencheur lorsque la commande git push est exécutée.
+      workflow_dispatch:  # Déclencher manuel
+    env: # variables 
       RG_NAME: [NOM DU GROUPE DE RESSOURCES]
       ACR_NAME: [NOM DU REGISTRE]
       IMAGE_NAME: dotnetanddocker
       ACR_SERVER: [NOM DU REGISTRE].azurecr.io
 
-    jobs:
-
+    jobs: 
       build:
 
-        runs-on: ubuntu-latest  
+        runs-on: ubuntu-latest  # Agent Linux pour l'exécution du Workflow
         
-        steps:
+        steps: 
 
-        - uses: actions/checkout@v2   
+        - uses: actions/checkout@v2   # Action qui récupère le code du repo et le copie sur l'agent
         - name:  Récupère .NET
-          uses: actions/setup-dotnet@v1 
+          uses: actions/setup-dotnet@v1 # Action qui configure .NET 5 sur l'agent
           with:
               dotnet-version: 5.0.x            
         - name: Publier le code source
-          run:  
+          run:  # Action qui permet d'exécuter la publication 
             dotnet publish -c release ./app/dotnetanddocker.csproj -o ./app/publier      
         - name: Tester le code
-          run:  | 
+          run:  | # Pas de tests dans cette démo.
                 echo "Il faudrait tester le code !!"            
         - name: Connexion à Azure conteneur Registry
-          uses: docker/login-action@v1.10.0
+          uses: docker/login-action@v1.10.0 # Action qui va permettre de se loguer au Registre de conteneurs Azure
           with:
             registry: ${{ env.ACR_SERVER }}
             username: ${{ env.ACR_NAME }}
             password: ${{ secrets.PASSREGISTRY }}
         - name: Extraire les métadonnées docker
           id: meta
-          uses: docker/metadata-action@v3.5.0
+          uses: docker/metadata-action@v3.5.0 # Action qui va permettre d'extraire les méta-données docker
           with:
             images: ${{ env.ACR_SERVER }}/${{ env.IMAGE_NAME }} 
             tags: |
             type=semver,pattern={{version}},value=v1.0.0
             
         - name: Construire et pousser image Docker
-          uses: docker/build-push-action@v2.7.0
+          uses: docker/build-push-action@v2.7.0 # Action pour la génération et le déploiement de l'image sur le Registre Azure
           with:         
               context: ./
-              file: ./app/Dockerfile
+              file: ./app/Dockerfile 
               push: true
               tags: ${{ steps.meta.outputs.tags }}
               labels: ${{ steps.meta.outputs.labels }}
@@ -454,9 +463,10 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     ```
 
     **Remplacez les variables** entre crochets par vos propres noms
-
-    Ensuite StartCommit...
-
+    
+    Enfin appuyez sur le bouton **StartCommit**.
+    
+    
 
 9. Sur Github ajoutez en tant que secret les informations de login à Azure.
 
