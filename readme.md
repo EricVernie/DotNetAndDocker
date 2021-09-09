@@ -38,7 +38,7 @@ Si vous souhaitez tester le déploiement et l'intégration continue, il vous fau
 
 # Etape 1 : Création d'une application console .NET 5
 
-- Vérification de la version de .NET :
+- Vérification de la version de .NET installée :
 
   ```bash
   dotnet --version
@@ -59,7 +59,7 @@ Si vous souhaitez tester le déploiement et l'intégration continue, il vous fau
   ...
   ```
 
-- List des modèles disponibles :
+- Lister les modèles disponibles :
 
   ```bash
   dotnet new --list
