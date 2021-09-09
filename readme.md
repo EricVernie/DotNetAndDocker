@@ -11,7 +11,7 @@ Dans cet article nous allons aborder :
 
 Notre poste de développement se base sur un OS Windows Version **10.0.19041.1165**, vous pouvez bien évidement utiliser d'autres OS.
 
-1. [Installez le sous système linux sur Windows (**WSL**).](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
+1. [Installez le sous système linux sur Windows (**WSL 2**).](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
 
 2. [Installez le **Kit de développement .NET 5**.](https://docs.microsoft.com/fr-fr/dotnet/core/install/windows?tabs=net50)
 
@@ -23,7 +23,7 @@ Notre poste de développement se base sur un OS Windows Version **10.0.19041.116
 
 5. [Installez **Docker Desktop sur Windows**.](https://docs.docker.com/desktop/windows/install/)
 
-6. [Installez l'outil **az cli**.](https://docs.microsoft.com/fr-fr/cli/azure/install-azure-cli-windows?tabs=azure-cli)
+6. [Installez l'outil **az cli v2.28.0**.](https://docs.microsoft.com/fr-fr/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 
 7. [Installez **Windows Terminal**.](https://docs.microsoft.com/fr-fr/windows/terminal/get-started) (Optionnel)
 
