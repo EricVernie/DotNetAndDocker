@@ -319,7 +319,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
       # Initialisation du nouveau repo git
       git init
       
-      # Ajout de tous les fichiers sauf ceux définies dans le fichier .gitignore
+      # Ajout de tous les fichiers sauf ceux définis dans le fichier .gitignore
       git add .
 
       # Commit des changements
