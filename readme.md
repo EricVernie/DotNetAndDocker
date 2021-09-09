@@ -144,7 +144,7 @@ Nous allons utiliser ici le modèle **console** de la manière suivante :
 
     -_Exécution de l'application sur Linux et Windows_
     
-# Etape 2: Conteneurisation d'une application console .NET 5 avec Docker
+# Etape 2 : Conteneurisation d'une application console .NET 5 avec Docker
 
 La conteneurisation d'une application passe par la génération d'une **image** qui contiendra tous les élèments nécessaires pour que l'application fonctionne.
 
