@@ -469,6 +469,9 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     
     Enfin appuyez sur le bouton **StartCommit**.
     
+    >**Note:** Pour merger ce fichier avec votre repo local, exécutez la commande **git pull**.
+
+
     [Documentation Github Actions](https://docs.github.com/en/enterprise-server@3.2/actions)
 
 9. Sur Github ajoutez en tant que secret les informations de login à Azure
@@ -498,7 +501,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 
     ![run](./pictures/runworkflow.png)
 
-    >**Note:** Si vous souhaitez que le déclenchement du workflow démarre lorsque la commande **git push** est invoquée, décommenter les lignes, **push:** et **branches: [ main ]** du fichier yaml.
+    >**Note:** Si vous souhaitez que le déclenchement du workflow démarre lorsque la commande **git push** est invoquée, décommentez les lignes, **push:** et **branches: [ main ]** du fichier yaml.
 
 12. Vérifiez sur [le portail Azure](https://portal.azure.com) que l'image **dotnetanddocker** est bien présente
 
