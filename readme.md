@@ -259,7 +259,7 @@ Pour créer une image et un conteneur Windows, il faut basculer Docker pour qu'i
 - Ensuite, pour générer une image docker,  il suffit d'exécuter les mêmes commandes que précedement.
 
   ```bash
-   docker build --tag dotnetanddocker:1.0.0 --file ./app/Dockerfile .
+  docker build --tag dotnetanddocker:1.0.0 --file ./app/Dockerfile .
 
   docker run --rm -i dotnetanddocker:1.0.0
 
