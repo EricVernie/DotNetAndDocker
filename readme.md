@@ -321,7 +321,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
       git commit -m "Commit Initial"
 
     ```
-    >**Note:** avant d'exécuter la commande **git add .**, il serait de bon ton de supprimer les répertoires ./obj, ./bin, ./publier pour éviter de les ajouter au commit initial (sinon créez un fichier .gitignore) 
+    >**Note:** avant d'exécuter la commande **git add .**, il serait de bon ton de supprimer les répertoires ./app/obj, ./app/bin, ./app/publier pour éviter de les ajouter au commit initial, sinon vous pouvez ajouter le fichier .gitignore qui se trouve dans ce repos.
 
 3. Ajoutez le repo distant github au repo local et poussez les modifications sur le repo github.
 

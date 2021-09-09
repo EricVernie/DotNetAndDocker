@@ -1,4 +1,0 @@
-mcr.microsoft.com/windows/nanoserver		
-	
-mcr.microsoft.com/dotnet/framework/aspnet	
-mcr.microsoft.com/dotnet/runtime	
