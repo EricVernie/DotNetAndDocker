@@ -274,7 +274,7 @@ Pour créer une image et un conteneur Windows, il faut basculer Docker pour qu'i
 Parfois il est nécessaire d'aller vérifier directement dans le conteneur si tous les élèments nécessaire ont bien été copiés, installés etc. Pour cela il est possible d'exécuter un shell de commande en mode interactif.
 
 
-1. Tout d'abord il faut lister conteneurs encours d'exécution pour récupèrer leur ID.
+1. Tout d'abord il faut lister les conteneurs encours d'exécution pour récupèrer leur ID.
 
     ```bash
     docker ps
