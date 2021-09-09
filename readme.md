@@ -169,7 +169,7 @@ Ici notre fichier Dockerfile est simplifié au maximum, il contient les instruct
 
   **FROM mcr.microsoft.com/dotnet/runtime:5.0**
 
-- La copie des binaires de l'application se trouvant sur le poste local dans le répertoire **/app/publier**, vers le répertoire **/app** qui sera crée lors de la copie).
+- La copie des binaires de l'application se trouvant sur le poste local dans le répertoire **/app/publier**, vers le répertoire **/app** qui sera crée lors de la copie.
 
   **COPY /app/publier /app**
 
@@ -218,7 +218,7 @@ Ici notre fichier Dockerfile est simplifié au maximum, il contient les instruct
   Docker run --rm -it dotnetanddocker:1.0.0
   ```
 
-  ![Runconteneur](./pictures/Runconteneur.png)
+  ![Runconteneur](./pictures/RunConteneur.png)
   -_Exécution d'un conteneur Linux_
 
   Lors de l'exécution de cette commande, un **conteneur** est crée.
