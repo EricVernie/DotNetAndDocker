@@ -289,11 +289,13 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 2. Ensuite il suffit d'exécuter la commande suivante : 
 
     ```bash
-      docker exec -it [conteneur ID] bash (Linux)
+      # Linux 
+      docker exec -it [conteneur ID] bash
       
       ou
 
-      docker exec -it [conteneur ID] cmd (Windows)
+      # Windows
+      docker exec -it [conteneur ID] cmd
     ```
     Exécute le shell bash ou cmd dans le conteneur en mode interactif.
 
