@@ -316,7 +316,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 2. Positionnez vous dans le répertoire **dotnetanddocker** et exécutez les commandes suivantes :
 
     ```bash
-      # Initialiisation du nouveau repo git
+      # Initialisation du nouveau repo git
       git init
       
       # Ajout de tous les fichiers sauf ceux définies dans le fichier .gitignore
