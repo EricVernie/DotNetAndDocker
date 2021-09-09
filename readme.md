@@ -324,7 +324,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 
     ```
     
-    >**Note:** Avant d'exécuter la commande **git add .**, il serait de bon ton de supprimer les répertoires ./app/obj, ./app/bin, ./app/publier pour éviter de les ajouter au commit initial, sinon vous pouvez ajouter le fichier .gitignore qui se trouve dans ce repos.
+    >**Note:** Avant d'exécuter la commande **git add .**, il serait de bon ton de supprimer les répertoires ./app/obj, ./app/bin, ./app/publier pour éviter de les ajouter au commit initial, sinon vous pouvez ajouter le fichier .gitignore qui se trouve dans ce repo.
 
 3. Ajoutez le repo distant github au repo local et poussez les modifications sur le repo github.
 
