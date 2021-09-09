@@ -327,7 +327,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 
     ```
     
-    >**Note:** avant d'exécuter la commande **git add .**, il serait de bon ton de supprimer les répertoires ./app/obj, ./app/bin, ./app/publier pour éviter de les ajouter au commit initial, sinon vous pouvez ajouter le fichier .gitignore qui se trouve dans ce repos.
+    >**Note:** Avant d'exécuter la commande **git add .**, il serait de bon ton de supprimer les répertoires ./app/obj, ./app/bin, ./app/publier pour éviter de les ajouter au commit initial, sinon vous pouvez ajouter le fichier .gitignore qui se trouve dans ce repos.
 
 3. Ajoutez le repo distant github au repo local et poussez les modifications sur le repo github.
 
@@ -352,15 +352,15 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
 
     az account set --subscription [SUBSCRIPTION ID]
 
-    #Création du groupe de ressources 
+    # Création du groupe de ressources 
 
     az group create -g [NOM DU GROUPE DE RESSOURCES]  -l "Francecentral"
 
-    #Création du registre de conteneurs Azure
+    # Création du registre de conteneurs Azure
 
     az acr create --name [NOM DU REGISTRE] --resource-group [NOM DU GROUPE DE RESSOURCES]  --sku Basic --admin-enabled true --output none
 
-    #Récupère le mot de passe 
+    # Récupère le mot de passe 
 
     az acr credential show --resource-group [NOM DU GROUPE DE RESSOURCES]  --name [NOM DU REGISTRE]  --query passwords[0].value --output tsv
 
@@ -462,7 +462,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
         
     ```
 
-    **Remplacez les variables** entre crochets par vos propres noms
+    **Remplacez les variables** entre crochets par vos propres noms.
     
     Enfin appuyez sur le bouton **StartCommit**.
     
