@@ -1,4 +1,4 @@
-# Containeuriser une application .NET console
+# Conteneuriser une application .NET console
 
 Dans cet article nous allons aborder :
 
