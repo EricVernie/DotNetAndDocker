@@ -1,3 +1,4 @@
+# Containeuriser une application .NET console
 
 Dans cet article nous allons aborder :
 
@@ -8,7 +9,7 @@ Dans cet article nous allons aborder :
 - Et la déployer sur [Azure](https://docs.microsoft.com/fr-fr/azure) à l'aide des [actions Github](https://docs.github.com/en/actions)
 
 
-# Préparation du poste de developpement (Windows 10)
+## Préparation du poste de developpement (Windows 10)
 
 Notre poste de développement se base sur un OS Windows Version **10.0.19041.1165**, vous pouvez bien évidement utiliser d'autres OS.
 
@@ -29,7 +30,7 @@ Notre poste de développement se base sur un OS Windows Version **10.0.19041.116
 7. [Installez **Windows Terminal**.](https://docs.microsoft.com/fr-fr/windows/terminal/get-started) (Optionnel)
 
 
-# Abonnement Azure et Github (Optionnel)
+## Abonnement Azure et Github (Optionnel)
 
 Si vous souhaitez tester le déploiement et l'intégration continue, il vous faut :
 
@@ -37,7 +38,7 @@ Si vous souhaitez tester le déploiement et l'intégration continue, il vous fau
 
 - Un compte Github : [Compte Gratuit](https://github.com/)
 
-# Etape 1 : Création d'une application console .NET 5
+## Etape 1 : Création d'une application console .NET 5
 
 - Vérifiez la version de .NET installée
 
@@ -142,7 +143,7 @@ Si vous souhaitez tester le déploiement et l'intégration continue, il vous fau
 
     _Exécution de l'application sur Linux et Windows_
     
-# Etape 2 : Conteneurisation d'une application console .NET 5 avec Docker
+## Etape 2 : Conteneurisation d'une application console .NET 5 avec Docker
 
 La conteneurisation d'une application passe par la génération d'une **image** qui contiendra tous les élèments nécessaires pour que l'application fonctionne.
 
@@ -151,7 +152,7 @@ Pour générer cette image, il nous faut un fichier texte (en régle générale 
 [Introduction aux conteneurs docker avec .NET 5](https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/container-docker-introduction/)
 
 
-## Création du fichier Dockerfile
+### Création du fichier Dockerfile
 
     FROM mcr.microsoft.com/dotnet/runtime:5.0
 
@@ -182,61 +183,62 @@ Ici notre fichier Dockerfile est simplifié au maximum, il contient les instruct
 
   Reportez-vous à la [documentation officielle Docker](https://docs.docker.com/engine/reference/builder/), pour de plus amples informations.
 
-## Génération de l'image
+### Génération de l'image Docker
 
-- Pour construire l'image il faut utiliser l'instruction **docker build** de la manière suivante :
+1. Pour construire l'image il faut utiliser l'instruction **docker build** de la manière suivante :
 
-  ```bash
-  docker build --tag dotnetanddocker:1.0.0 --file ./app/Dockerfile .
-  ```
+    ```bash
+    docker build --tag dotnetanddocker:1.0.0 --file ./app/Dockerfile .
+    ```
 
-  |Option|Argument|Description|
-  |--|--|--|
-  |--tag|dotnetanddocker:1.0.0|Nom de l'image avec ça balise.|
-  |--file|./app/Dockerfile|Chemin du fichier Dockerfile.|
-  ||**.**|Contexte d'exécution de la génération de l'image. Le point (.) signifie que le répertoire courant dans  notre exemple **c:\dotnetdocker**, sera la racine d'exécution de la génération de l'image. Ceci aura une **incidence capitale** dans notre fichier Dockerfile, sur l'instruction de copie des binaires de l'application ou nous précisons d'aller les chercher sur **/app/publier**. Plus d'info [ici](https://docs.docker.com/engine/reference/commandline/build/)|
+    |Option|Argument|Description|
+    |--|--|--|
+    |--tag|dotnetanddocker:1.0.0|Nom de l'image avec ça balise.|
+    |--file|./app/Dockerfile|Chemin du fichier Dockerfile.|
+    ||**.**|Contexte d'exécution de la génération de l'image. Le point (.) signifie que le répertoire courant dans  notre exemple **c:\dotnetdocker**, sera la racine d'exécution de la génération de l'image. Ceci aura une **incidence capitale** dans notre fichier Dockerfile, sur l'instruction de copie des binaires de l'application ou nous précisons d'aller les chercher sur **/app/publier**. Plus d'info [ici](https://docs.docker.com/engine/reference/commandline/build/)|
 
 
-  ![DockerBuild](./pictures/DockerBuild.png)
+    ![DockerBuild](./pictures/DockerBuild.png)
         
-  _Génération d'une image Linux_
+    _Génération d'une image Linux_
 
-- Listez les images sur le poste local
-  ```bash
-  docker images
-  ```
+2. Listez les images sur le poste local
+  
+    ```bash
+    docker images
+    ```
 
-  |REPOSITORY|TAG|IMAGE ID|       CREATED |        SIZE|
-  |--|--|--|--|--|
-  |dotnetanddocker |  1.0.0     |   71457a3d3799|   2 minutes ago|   186MB|
+    |REPOSITORY|TAG|IMAGE ID|       CREATED |        SIZE|
+    |--|--|--|--|--|
+    |dotnetanddocker |  1.0.0     |   71457a3d3799|   2 minutes ago|   186MB|
 
-- Exécutez l'application
+3. Exécutez l'application
 
-  ```bash
-  Docker run --rm -it dotnetanddocker:1.0.0
-  ```
+    ```bash
+    Docker run --rm -it dotnetanddocker:1.0.0
+    ```
 
-  ![Runconteneur](./pictures/RunConteneur.png)
-  _Exécution d'un conteneur Linux_
+    ![Runconteneur](./pictures/RunConteneur.png)
+    _Exécution d'un conteneur Linux_
 
-  Lors de l'exécution de cette commande, un **conteneur** est crée.
-  |Option|Description|
-  |--|--|
-  |--rm|Supprime le conteneur automatiquement à la fin de son exécution.|
-  |-i|Exécute le conteneur en mode interactif. Cela permet au conteneur de ne pas s'arrêter automatiquement.|
-  |dotnetanddocker:1.0.0| Image de base utilisée pour la création du conteneur.|
+    Lors de l'exécution de cette commande, un **conteneur** est crée.
+    |Option|Description|
+    |--|--|
+    |--rm|Supprime le conteneur automatiquement à la fin de son exécution.|
+    |-i|Exécute le conteneur en mode interactif. Cela permet au conteneur de ne pas s'arrêter automatiquement.|
+    |dotnetanddocker:1.0.0| Image de base utilisée pour la création du conteneur.|
 
-- Exécutez la commande suivante, pour lister les conteneurs en cours d'exécution
+4. Exécutez la commande suivante, pour lister les conteneurs en cours d'exécution
 
-  ```bash
-  Docker ps
-  ```
-  |conteneur ID  |     IMAGE    | COMMAND  | CREATED |   STATUS |PORTS| NAMES|
-  |---|---|---|---|---|---|---|
-  f7d60abdf162 |  dotnetanddocker:1.0.0|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
+    ```bash
+    Docker ps
+    ```
+    |conteneur ID  |     IMAGE    | COMMAND  | CREATED |   STATUS |PORTS| NAMES|
+    |---|---|---|---|---|---|---|
+    f7d60abdf162 |  dotnetanddocker:1.0.0|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
 
 
-## Génération d'une image et d'un conteneur pour Windows
+### Génération d'une image et d'un conteneur pour Windows
 
 Pour créer une image et un conteneur Windows, il faut basculer Docker pour qu'il utilise Windows, comme illustré sur l'image suivante :
 
@@ -244,31 +246,31 @@ Pour créer une image et un conteneur Windows, il faut basculer Docker pour qu'i
 
   _Basculement sur les conteneurs Windows_
 
-- Listez les conteneurs disponibles
+1. Listez les conteneurs disponibles
 
-  ```bash
-    docker images
-  ```
-  Logiquement la liste est vide.
+    ```bash
+      docker images
+    ```
+    Logiquement la liste est vide.
 
-  |REPOSITORY|TAG|IMAGE ID|       CREATED |        SIZE|
-    |--|--|--|--|--|
-
-
-- Ensuite, pour générer une image docker,  il suffit d'exécuter les mêmes commandes que précedement
-
-  ```bash
-  docker build --tag dotnetanddocker:1.0.0 --file ./app/Dockerfile .
-
-  docker run --rm -i dotnetanddocker:1.0.0
-
-  ```
+    |REPOSITORY|TAG|IMAGE ID|       CREATED |        SIZE|
+      |--|--|--|--|--|
 
 
-  ![conteneurWindows](./pictures/ConteneurWindows.png)
-  _Exécution d'un conteneur Windows_
+2. Ensuite, pour générer une image docker,  il suffit d'exécuter les mêmes commandes que précedement
 
-## Se connecter à un conteneur
+    ```bash
+    docker build --tag dotnetanddocker:1.0.0 --file ./app/Dockerfile .
+
+    docker run --rm -i dotnetanddocker:1.0.0
+
+    ```
+
+
+    ![conteneurWindows](./pictures/ConteneurWindows.png)
+    _Exécution d'un conteneur Windows_
+
+### Se connecter à un conteneur
 
 Parfois il est nécessaire d'aller vérifier directement dans le conteneur si tous les élèments nécessaire ont bien été copiés, installés etc. Pour cela il est possible d'exécuter un shell de commande en mode interactif.
 
@@ -278,12 +280,12 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     ```bash
     docker ps
     ```
-  >**Note:** L'instruction **docker ps --all** permet de lister tous les conteneurs, y compris ceux qui sont arrêtés.
+    >**Note:** L'instruction **docker ps --all** permet de lister tous les conteneurs, y compris ceux qui sont arrêtés.
 
 
-  |conteneur ID  |     IMAGE    | COMMAND  | CREATED |   STATUS |PORTS| NAMES|
-  |---|---|---|---|---|---|---|
-  |f7d60abdf162 |  dotnetanddocker:v1|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
+    |conteneur ID  |     IMAGE    | COMMAND  | CREATED |   STATUS |PORTS| NAMES|
+    |---|---|---|---|---|---|---|
+    |f7d60abdf162 |  dotnetanddocker:v1|   "dotnet DotNetAndDoc…"  | About a minute ago  | Up About a minute          |  | modest_lalande
 
 2. Ensuite il suffit d'exécuter la commande suivante avec le bon ID
 
@@ -296,7 +298,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
       # Windows
       docker exec -it [conteneur ID] cmd
     ```
-    L'option -it permet d'exécuter le shell bash ou cmd dans le conteneur en mode interactif.
+    L'option **-it** permet d'exécuter le shell bash ou cmd dans le conteneur en mode interactif.
 
     ![Linux](./pictures/ConnectionLinux.png)
     _Connection au conteneur Linux_
@@ -305,7 +307,7 @@ Parfois il est nécessaire d'aller vérifier directement dans le conteneur si to
     _Connection au conteneur Windows_
 
 
-# Etape 3 : Automatiser le déploiement sur Azure avec Github Action (Optionnel)
+## Etape 3 : Automatiser le déploiement sur Azure avec Github Action (Optionnel)
 
 1. Tout d'abord il vous faut créer un nouveau repo dans Github. https://docs.github.com/en/get-started/quickstart/create-a-repo
 
